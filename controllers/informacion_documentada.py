@@ -307,33 +307,6 @@ def ficha():
 	row = db(db.documentos.codigo==uname).select()
 
 
-	# dic = {
-	# "codigo": request.post_vars.codigo,
-	# "objetivo": request.post_vars.objetivos,
-	# "ubicacion_electronica": request.post_vars.ubicacion_electronica,
-	# "ubicacion_fisica": request.post_vars.ubicacion_fisica,
-	# # "cod_anexo": request.post_vars.cod_anexo,
-	# # "nombre_anexo": request.post_vars.nombre_anexo,
-	# "responsable": request.post_vars.responsable,
-	# "nombre_doc": request.post_vars.nombre_documento,
-	# "estatus":"Planificado",
-	# "periodo_rev":request.post_vars.periodo,
-	# "aprobado_por": request.post_vars.aprobado,
-	# "elaborado_actualizado_por": request.post_vars.elaborado,
-	# # "vigencia":
-	# "fecha_aprob": request.post_vars.fechaAprobacion,
-	# "fecha_prox_rev": request.post_vars.fecha_prox_rev,
-	# "fecha_control_cambio": request.post_vars.fecha_control_cambio,
-	# "cod_control_cambio": request.post_vars.cod_control_cambio,
-	# "cod_aprob": request.post_vars.cod_registro,
-	# "fecha_rev_por_consejo_asesor": request.post_vars.fecha_revision_consejo,
-	# "rev_por_consejo_asesor": request.post_vars.revision_consejo,
-	# "fecha_rev_especificaciones_doc":  request.post_vars.fecha_revision_especificaciones,
-	# "fecha_rev_contenido": request.post_vars.fecha_revision_contenidos,
-	# "rev_especficaciones_doc_realizado_por": request.post_vars.revision_especificaciones,
-	# "rev_contenido_realizado_por": request.post_vars.revision_contenido,
-	# "tipo_doc":request.post_vars.tipo,
-	# }
 
 	documento =  db(db.documentos.codigo==uname)
 
@@ -409,6 +382,10 @@ def ficha():
         	ubicacion_fisica = request.post_vars.ubicacion_fisica,
         	ubicacion_electronica = request.post_vars.ubicacion_electronica
         )###
+	if(request.post_vars.eliminar=="eliminar"):
+		db(db.documentos.codigo==uname).delete()
+		redirect(URL('lista_documentos'))
+
 
 
 	return dict(documentos=row,
