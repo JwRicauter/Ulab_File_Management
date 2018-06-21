@@ -256,10 +256,6 @@ def ficha():
 
 	documento =  db(db.documentos.codigo==uname)
 	if(request.post_vars.elaborado=="edicion"):
-		 jQuery('#objetivos').removeAttr('disabled');
-        jQuery('#periodo').removeAttr('disabled');
-        jQuery('#elaborado').removeAttr('disabled');
-
 		documento.update(estatus="Elaborado",
 			periodo_rev=request.post_vars.periodo,
 			objetivo=request.post_vars.objetivos,
