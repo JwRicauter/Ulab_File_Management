@@ -1,7 +1,5 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
-*$py.class
 
 # C extensions
 *.so
@@ -104,9 +102,10 @@ ENV/
 __init__.py
 cache/ 
 databases/
-errors/ 
-sessions/  
+errors/*
+sessions/
 private/
 uploads/
 .hg/
-
+*.bak
+.merge*
