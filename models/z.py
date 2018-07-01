@@ -91,7 +91,6 @@ if db(db.auth_user).isempty():
 # Sedes
 
 if db(db.sedes).isempty():
-	print("coño de la madre web2py")
 	db.sedes.insert(nombre="Sartenejas")
 	db.sedes.insert(nombre="Litoral")
 
