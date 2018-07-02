@@ -475,6 +475,31 @@
                     {{pass}}
                   </select>
                 </div>
+                  <!-- Campo de Código -->
+              <div class="form-group">
+                <h5>Código del documento</h5>
+                <input disabled='' type="text" class="input" name="codigo" id="codigo" placeholder="Código Documento" onchange="codigoDoc()" value="{{=doc.codigo}}" >
+              </div>
+
+              <!-- Campo de Objetivos -->
+              <div class="form-group">
+                <h5>Objetivos del documento</h5>
+                <input disabled='' type="text" class="input" name="objetivos" id="objetivos" placeholder="Objetivos" value="{{=doc.objetivo}}"> 
+              </div>
+
+              <!-- Campo de Período de Revisión -->
+              <div class="form-group">
+                <h5>Período de Revisión</h5>
+                <select disabled="" name="periodo" id="periodo" class="input" >
+                  <option value="{{=doc.periodo_rev}}"></option>
+                  <option value="Semestral">Semestral</option>
+                  <option value="Anual">Anual</option>
+                  <option value="Bienal">Bienal</option>
+                  <option value="Trienal">Trienal</option>
+                  <option value="Quinquenal">Quinquenal</option>
+                </select> 
+              </div>
+
 
 
                 <div style="position: fixed; bottom: 0; right: 0;">  
@@ -504,45 +529,11 @@
               
               <h4 class="titulosForm">Fase de Elaboración</h4>
 
-              <!-- Campo de Código -->
+
+    
+                <!-- Campo de Número de Anexos -->
               <div class="form-group">
-                <h5>Código del documento</h5>
-                <input disabled='' type="text" class="input" name="codigo" id="codigo" placeholder="Código Documento" onchange="codigoDoc()" value="{{=doc.codigo}}" >
-              </div>
-
-              <!-- Campo de Objetivos -->
-              <div class="form-group">
-                <h5>Objetivos del documento</h5>
-                <input disabled='' type="text" class="input" name="objetivos" id="objetivos" placeholder="Objetivos" value="{{=doc.objetivo}}"> 
-              </div>
-
-              <!-- Campo de Período de Revisión -->
-              <div class="form-group">
-                <h5>Período de Revisión</h5>
-                <select disabled="" name="periodo" id="periodo" class="input" >
-                  <option value="{{=doc.periodo_rev}}"></option>
-                  <option value="Semestral">Semestral</option>
-                  <option value="Anual">Anual</option>
-                  <option value="Bienal">Bienal</option>
-                  <option value="Trienal">Trienal</option>
-                  <option value="Quinquenal">Quinquenal</option>
-                </select> 
-              </div>
-
-
-              <!-- Campo de Fecha de entrega para revisión del Documento -->
-
-            
-                <div class="form-group">
-                <h5>Fecha de elaboración</h5>
-                <input disabled="" class="datepicker" name="fecha_prox_rev" id="fecha_prox_rev" type="text" data-placement="bottom" data-trigger="manual" data-content="Seleccione una fecha" value="{{=doc.fecha_prox_rev}}">
-              </div>
-
-
-              <!-- Campo de Número de Anexos -->
-              <div class="form-group">
-                <div class="form-group">
-                <h5>Anexos</h5>
+                <h5>Número de anexos</h5>
 
                 <div id="p_anexo">
                   <p>
@@ -550,8 +541,9 @@
                   </p>
                 </div>
 
-                <a disabled="" href="#" id="addAnexo"><span class="fa fa-plus">Agregar Anexo</span></a>
+                <a href="#" id="addAnexo"><span class="fa fa-plus">Agregar Anexo</span></a>
               </div>
+
 
               <div style="position: fixed; bottom: 0; right: 0;">
                 <button type="button" class="btn btn-previous botonForm"><i class="fa fa-arrow-left"></i></button>
@@ -595,6 +587,15 @@
                 <a href="#" id="addScnt"><span class="fa fa-plus">Agregar Elaborador</span></a>
                                       
               </div>
+
+               <!-- Campo de Fecha de entrega para revisión del Documento -->
+
+            
+                <div class="form-group">
+                <h5>Fecha de elaboración</h5>
+                <input disabled="" class="datepicker" name="fecha_prox_rev" id="fecha_prox_rev" type="text" data-placement="bottom" data-trigger="manual" data-content="Seleccione una fecha" value="{{=doc.fecha_prox_rev}}">
+              </div>
+
 
           
             
@@ -654,7 +655,7 @@
 
               <!-- Campo de confirmación si fué o no revisado por el consejo -->
               <div class="form-group">
-                <label>Revisión del Consejo</label>
+                <label>Revisión del Consejo Asesor - ULAB</label>
                 <br>
                 <input disabled='' type="radio" name="revision_consejo" value="1" onclick="agregarFecha()">Si
                 <br>
@@ -755,6 +756,7 @@
                 <!-- Campo de vínculo del documento -->
                 <div class="form-group">
                   <label>Vínculo: </label>
+                  <input type="text" class="input" name="vinculo" id="vinculo" placeholder="Ingrese el vinculo" /> 
                 </div>
 
               <div style="position: fixed; bottom: 0; right: 0;">
@@ -837,7 +839,6 @@
   </div>  
 </div>
 </div>
-
 
 <form method="POST">
   <div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
