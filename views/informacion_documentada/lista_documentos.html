@@ -586,6 +586,8 @@
 								<div class="form-group">
 									<h5>Fecha de aprobación</h5>
 									<input class="datepicker" name="fechaAprobacion" id="fechaAprobacion" type="text" data-placement="bottom" data-trigger="manual" data-content="Seleccione una fecha"> 
+									<h6 style="color:red" id="error_apro_1">La fecha de aprobación debe ser superior a la fecha de revisión de contenido</h6>
+              						<h6 style="color:red" id="error_apro_2">La fecha de aprobación debe ser superior a la fecha de revisión de especificaciones</h6> 
 								</div>	
 								
 								<!-- Campo de código de registro de aprobación -->
@@ -680,6 +682,7 @@
 								<div class="form-group">
 									<h5>Fecha de control de cambios</h5>
 									<input class="datepicker" name="fechaControlCambios" id="fechaControlCambios" type="text" data-placement="bottom" data-trigger="manual" data-content="Seleccione una fecha">
+									<h6 style="color:red" id="error_cambios">La fecha de control de cambios debe ser superior a la fecha de elaboración</h6>
 								</div>
 
 								<!-- Campo de Elaborado por -->
@@ -751,6 +754,9 @@
 	$("#con_as_div").hide();
 	$("#error_con_1").hide();
 	$("#error_con_2").hide();
+	$("#error_apro_1").hide();
+  $("#error_apro_2").hide();
+  $("#error_cambios").hide();
 	function get_code(i){
 		cod = i[i.selectedIndex].id; // get value
 		document.getElementById("codigo").value = cod + "-";
@@ -799,6 +805,8 @@
 	var fecha_revision_contenidos;
 	var fecha_revision_especificaciones;
 	var fecha_revision_consejo;
+	var fechaAprobacion;
+  var fechaControlCambios;
 	$("#fecha_prox_rev").change(function () {
 		fecha_prox_rev = $("#fecha_prox_rev").val();
 		let fecha = fecha_prox_rev.split("-");
@@ -849,7 +857,35 @@
 		}
 
 	});
+	$("#fechaControlCambios").change(function () {
+    fechaControlCambios = $("#fechaControlCambios").val();
+    if(validate_fechaMayorQue(fecha_prox_rev,fechaControlCambios)){
+      $("#error_cambios").hide()
+      $(".enviar").removeAttr("disabled")
+    }else{
+      $("#error_cambios").show()
+      $(".enviar").attr('disabled','disabled')
+    }
+  });
 
+  $("#fechaAprobacion").change(function () {
+    fechaAprobacion = $("#fechaAprobacion").val();
+    if(validate_fechaMayorQue(fecha_revision_contenidos,fechaAprobacion)){
+      $("#error_apro_1").hide()
+      $(".enviar").removeAttr("disabled")
+    }else{
+      $("#error_apro_1").show()
+      $(".enviar").attr('disabled','disabled')
+    }
+
+    if(validate_fechaMayorQue(fecha_revision_especificaciones,fechaAprobacion)){
+      $("#error_apro_2").hide()
+      $(".enviar").removeAttr("disabled")
+    }else{
+      $("#error_apro_2").show()
+      $(".enviar").attr('disabled','disabled')
+    }
+  });
 	function validate_fechaMayorQue(fechaInicial,fechaFinal)
 	{
 
