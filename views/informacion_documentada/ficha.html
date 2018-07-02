@@ -1,6 +1,4 @@
 {{extend 'layout.html'}}
-<h1>Está es la plantilla informacion_documentada/ficha.html</h1>
-{{=BEAUTIFY(response._vars)}}
 
 
 {{block head}}
@@ -11,6 +9,7 @@
   <link rel="stylesheet" type="text/css" href="{{=URL('static', 'css/servicios_modal.css')}}">
   <link rel="stylesheet" href="{{=URL('static', 'css/servicios_listado.css')}}">
   <link rel="stylesheet" href="{{=URL('static', 'css/servicios_template_modal.css')}}">
+   <link rel="stylesheet" href="{{=URL('static', 'css/bootstrap-datepicker3.css')}}">
   <script src="{{=URL('static', 'js/servicios_template_modal.js')}}"></script>
   <link rel="stylesheet" href="{{=URL('static', 'css/ficha_personal.css')}}">
   <!-- DataTables -->
@@ -18,7 +17,15 @@
   <link href="{{=URL('static', 'plugins/datatables/buttons.bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
   <link href="{{=URL('static', 'plugins/datatables/responsive.bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
 
+ 
+ 
+  <script src="{{=URL('static', 'js/bootstrap-datepicker.min.js')}}"></script>
 
+
+  <link rel="stylesheet" type="text/css" href="{{=URL('static', 'css/servicios_modal.css')}}">
+  <link rel="stylesheet" href="{{=URL('static', 'css/servicios_listado.css')}}">
+  <link rel="stylesheet" href="{{=URL('static', 'css/servicios_template_modal.css')}}">
+  
   <!-- Web2py JS - Especialmente para AJAX -->
   <script src="{{=URL('static', 'js/web2py.js')}}"></script>
 
@@ -171,7 +178,7 @@
           </div>
         </div>
           <div class="col-sm-11" id="col11Header">
-          <h4 class="modal-title" id="nuevoServicio">Agregar Documento</h4>
+          <h4 class="modal-title" id="nuevoServicio">Editar Documento</h4>
         </div>
       </div>
     </div>
@@ -203,13 +210,13 @@
                 <!-- Campo de Nombre del Documento -->
                 <div class="form-group" data-atributo="{{=doc.estatus}}">
                   <h5>Nombre del Documento</h5>
-                  <input disabled='' type="text" class="input" name="nombre_documento" id="nombre_documento" placeholder="Nombre del Documento" value="{{=doc.nombre_doc}}" required>
+                  <input disabled='' type="text" class="input" name="nombre_documento" id="nombre_documento" placeholder="Nombre del Documento" value="{{=doc.nombre_doc}}" >
                 </div>
 
                 <!-- Campo de Tipo del Documento -->
                 <div class="form-group"> 
                   <h5>Tipo del Documento</h5>
-                  <select disabled="" name="tipo" id="tipo" class="input" required>
+                  <select disabled="" name="tipo" id="tipo" class="input" >
                     <option value="{{=doc.tipo_doc}}">{{=doc.tipo_doc}}</option>
                   </select>
                 </div>
@@ -217,17 +224,16 @@
                 <!-- Campo de Responsable del Documento -->
                 <div class="form-group"> 
                   <h5>Responsable</h5>
-                  <select disabled="" name="responsable" id="responsable" class="input" onchange="get_code(this)" required>
+                  <select disabled="" name="responsable" id="responsable" class="input" onchange="get_code(this)" >
                     <option value="{{=doc.responsable}}">{{=doc.responsable}}</option>
                     {{for dep in dependencias:}}
-                      <option value="{{=dep.codigo_registro}}" id="{{=dep.nombre}}">{{=dep.nombre}}</option>
+                    <option value="{{=dep.codigo_registro}}" id="{{=dep.nombre}}">{{=dep.nombre}}</option>
                     {{pass}}
                   </select>
                 </div>
 
 
-                <div style="position: fixed; bottom: 0; right: 0;">
-                  <button type="submit" class="btn btn-submit botonForm" id="submit" form="formularioCarga" name="envio" value="edicion" ><i class="fa fa-floppy-o"></i></button>   
+                <div style="position: fixed; bottom: 0; right: 0;">  
                   <button type="button" class="btn btn-next add botonForm"><i class="fa fa-arrow-right"></i></button>
                 </div>
               </div>
@@ -281,16 +287,26 @@
 
 
               <!-- Campo de Fecha de entrega para revisión del Documento -->
-              <div class="form-group">
-                <h5>Fecha de entrega para revisión</h5>
-                  <input disabled='' type="date" class="input" name="fecha_prox_rev" id="fecha_prox_rev" value="{{=doc.fecha_prox_rev}}">
+
+            
+                <div class="form-group">
+                <h5>Fecha de elaboración</h5>
+                <input disabled="" class="datepicker" name="fecha_prox_rev" id="fecha_prox_rev" type="text" data-placement="bottom" data-trigger="manual" data-content="Seleccione una fecha" value="{{=doc.fecha_prox_rev}}">
               </div>
+
 
               <!-- Campo de Número de Anexos -->
               <div class="form-group">
-                <h5>Número de anexos</h5>
-                <input disabled='' type="number" class="input" name="numero_anexos" id="numero_anexos" placeholder="Número de Anexos" onchange="agregarAnexo(this)" />  
-                <div id="containerAnexos"/>
+                <div class="form-group">
+                <h5>Anexos</h5>
+
+                <div id="p_anexo">
+                  <p>
+
+                  </p>
+                </div>
+
+                <a disabled="" href="#" id="addAnexo"><span class="fa fa-plus">Agregar Anexo</span></a>
               </div>
 
               <div style="position: fixed; bottom: 0; right: 0;">
@@ -328,11 +344,11 @@
                 
                 <div id="p_scents">
                   <p>
-                    <input disabled='' type="text" id="p_scnt" size="20" name="elaborador" value="elaboradorDePrueba" placeholder="Ingrese un elaborador" />
+                    <input type="text" id="p_scnt" size="20" name="elaborador0" value="" placeholder="Ingrese un elaborador" />
                   </p>
                 </div>
 
-                <a href="#" id="addScnt"><span class="fa fa-plus"></span></a>
+                <a href="#" id="addScnt"><span class="fa fa-plus">Agregar Elaborador</span></a>
                                       
               </div>
 
@@ -368,25 +384,27 @@
               <!-- Campo de responsable de la revisión de contenidos -->
               <div class="form-group">
                 <h5>Revisión de contenidos</h5>
-                <input disabled='' type="text" class="input" name="revision_contenido" id="revision_contenido" placeholder="Revisión de contenido realizado por:" value="{{=doc.rev_contenido_realizado_por}}" required />
+                <input disabled='' type="text" class="input" name="revision_contenido" id="revision_contenido" placeholder="Revisión de contenido realizado por:" value="{{=doc.rev_contenido_realizado_por}}"  />
               </div> 
 
               <!-- Campo de fecha de la revisión de contenidos -->
               <div class="form-group">
                 <h5>Fecha de revisión de contenidos</h5>
-                <input disabled='' type="date" class="input" name="fecha_revision_contenidos" id="fecha_revision_contenidos" placeholder="Fecha de registro de revisión de contenidos" value="{{=doc.fecha_rev_contenido}}" required/> 
-              </div> 
-
+                <input disabled="" class="datepicker" name="fecha_revision_contenidos" id="fecha_revision_contenidos" type="text"  data-trigger="manual" data-content="Seleccione una fecha" value="{{=doc.fecha_rev_contenido}}">
+               
+              </div>
+ 
               <!-- Campo de responsable de la revisión de especificaciones -->
               <div class="form-group">
                 <h5>Revisión de especificaciones</h5>
-                <input disabled='' type="text" class="input" name="revision_especificaciones" id="revision_especificaciones" placeholder="Revisión de especificaciones del documento realizado por:" value="{{=doc.rev_especficaciones_doc_realizado_por}}" required /> 
+                <input disabled='' type="text" class="input" name="revision_especificaciones" id="revision_especificaciones" placeholder="Revisión de especificaciones del documento realizado por:" value="{{=doc.rev_especficaciones_doc_realizado_por}}"  /> 
               </div> 
 
               <!-- Campo de fecha de la revisión de especificaciones -->
               <div class="form-group">
                 <h5>Fecha de revisión de especificaciones</h5>
-                <input disabled='' type="date" class="input" name="fecha_revision_especificaciones" id="fecha_revision_especificaciones" placeholder="Fecha de revisión de especificaciones del documento" value="{{=doc.fecha_rev_especificaciones_doc}}" required/> 
+                <input disabled="" class="datepicker" name="fecha_revision_especificaciones" id="fecha_revision_especificaciones" type="text"  data-trigger="manual" data-content="Seleccione una fecha" value="{{=doc.fecha_rev_especificaciones_doc}}">
+
               </div> 
 
 
@@ -438,7 +456,7 @@
                 <!-- Campo de fecha de aprobación -->
                 <div class="form-group">
                   <h5>Fecha de aprobación</h5>
-                  <input disabled='' type="date" class="input" name="fechaAprobacion" id="fechaAprobacion" placeholder="Fecha de Aprobación" /> 
+                  <input disabled="" class="datepicker" name="fechaAprobacion" id="fechaAprobacion" type="text" data-trigger="manual" data-content="Seleccione una fecha" > 
                 </div>  
                 
                 <!-- Campo de código de registro de aprobación -->
@@ -533,7 +551,9 @@
                 <!-- Campo de la fecha del control de cambios -->
                 <div class="form-group">
                   <h5>Fecha de control de cambios</h5>
-                  <input disabled='' type="date" class="input" name="fechaControlCambios" id="fechaControlCambios" placeholder="Fecha de reg de control de cambios" /> 
+                
+                   <input disabled="" class="datepicker" name="fechaControlCambios" id="fechaControlCambios" type="text" data-trigger="manual" data-content="Seleccione una fecha">
+
                 </div>
 
                 <!-- Campo de Elaborado por -->
@@ -608,13 +628,143 @@
 
 
   {{pass}}
+
+<script type="text/javascript">
+
+  function get_code(i){
+    cod = i[i.selectedIndex].id; // get value
+    document.getElementById("codigo").value = cod + "-";
+  }
+
+</script>
+<script type="text/javascript">
+  $('#tipo').change(function(){
+    if( $(this).val() == 'Otro'){
+      $('#otros').append('<h5 id="titulo_otro_tipo"><br>Especifique el tipo de Documento</h5><input type="text" class="input" name="otro_tipo" id="otro_tipo" placeholder="Nombre del Tipo" required>');
+    }else{
+      $('#otro_tipo').remove();
+      $('#titulo_otro_tipo').remove();
+    }
+  });
+
+
+
+                  
+
+</script>
+<script type="text/javascript">
+  $(function() {
+    $('.datepicker').datepicker({
+        format: 'yyyy-mm-dd'
+      })  
+  });
+
+  $(function() {
+    
+    var scntDiv = $('#p_scents');
+    var i = $('#p_scents p').length + 1;
+    console.log(i, "inicial de elaborador")
+    
+    $('.form-group').on('click', '#addScnt', function() {
+      console.log(i)
+      $('<p><input type="text" id="p_scnt" size="20" name="elaborador' + i +'" value="" placeholder="Ingrese un elaborador" /> <a href="#" id="remScnt"><span class="fa fa-trash-o"></span></a></p>').appendTo(scntDiv);
+      i++;
+      return false;
+    });
+    
+    $('.form-group').on('click', '#remScnt', function() { 
+      if( i > 2 ) {
+        $(this).parents('p').remove();
+        i--;
+      }
+      return false;
+    });
+  });
+
+</script>
+
+<script type="text/javascript">
+
+  function codigoDoc(){
+     var codigoDocumento = document.getElementById("codigo").value;
+     return codigoDocumento;
+  }
+
+  $(function() {
+    
+    var scntDiv = $('#p_anexo');
+    var i = $('#p_anexo p').length + 1;
+    
+    var c = codigoDoc();
+    console.log(c);
+    console.log("asda");
+
+    $('.form-group').on('click', '#addAnexo', function() {
+      $('<p><input disabled='' type="text"  name="anexo_code' + i +'" value=" '+ c +' "  /><a href="#" id="remScnt"><span class="fa fa-trash-o"></span></a></p><p><input type="text"  name="anexo_name' + i +'" placeholder="Nombre del anexo"  /> <a href="#" id="remScnt"><span class="fa fa-trash-o"></span></a></p>' ).appendTo(scntDiv);
+      i++;
+      return false;
+    });
+    
+    $('.form-group').on('click', '#remScnt', function() { 
+      if( i > 1 ) {
+        $(this).parents('p').remove();
+        i--;
+      }
+      return false;
+    });
+  });
+
+</script>
+
+<script type="text/javascript">
+  function agregarFecha(){
+
+    var container = document.getElementById("containerRevision");
+    var input = document.createElement("input");
+    var fecha_revision = document.getElementById("fecha_revision_especificaciones").value;
+
+    input.type = "text";
+    input.class = "datepicker"
+    input.name = "fecha_revision_consejo";
+    input.id = "fecha_revision_consejo";
+
+
+    var etiqueta = document.createElement("label");
+    etiqueta.innerHTML = "Inserte la fecha de revisión por el consejo asesor";
+
+    container.appendChild(document.createElement("br"));
+    container.appendChild(etiqueta);
+    container.appendChild(input);
+
+    
+  }
+
+  function eliminarFecha(){
+
+    var container = document.getElementById("containerRevision");
+    while (container.hasChildNodes()) {
+      container.removeChild(container.lastChild);
+    }
+
+  }
+
+
+</script>
+
+
   <script>
+  $(function() {
+    $('.datepicker').datepicker({
+        format: 'yyyy-mm-dd'
+      })  
+  });
 function estatus(){
       if($('.form-group').data('atributo')=='Planificado'){
      
         jQuery('#objetivos').removeAttr('disabled');
         jQuery('#periodo').removeAttr('disabled');
-        jQuery('#elaborado').removeAttr('disabled');
+        jQuery('#fecha_prox_rev').removeAttr('disabled');
+
         jQuery('#revision_contenido').removeAttr('disabled');
         jQuery('#fecha_revision_contenidos').removeAttr('disabled');
         jQuery('#revision_especificaciones').removeAttr('disabled');
@@ -659,18 +809,8 @@ function estatus(){
         
       }
     }
-  </script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
-  <script type="text/javascript">
-    var ficha = "{{=URL('informacion_documentada','ficha',args=[doc.codigo])}}";
-    $('.tab-link').click( function() {
-    
-    var tabID = $(this).attr('data-tab');
-    
-    $(this).addClass('active').siblings().removeClass('active');
-    
-    $('#tab-'+tabID).addClass('active').siblings().removeClass('active');
-  });
+
+
   </script>
   <script type="text/javascript">
     // Get the modal
@@ -696,7 +836,23 @@ function estatus(){
     $('#edit_send').click(function(event){
         window.reload();
     });
+
+
   </script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+
 <script src="{{=URL('static','js/agregarDoc.js')}}"></script>
+
+<script src="{{=URL('static', 'plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{=URL('static', 'plugins/datatables/dataTables.bootstrap.js')}}"></script>
+<script src="{{=URL('static', 'plugins/datatables/dataTables.buttons.min.js')}}"></script>
+<script src="{{=URL('static', 'plugins/datatables/buttons.bootstrap.min.js')}}"></script>
+<script src="{{=URL('static', 'plugins/datatables/jszip.min.js')}}"></script>
+<script src="{{=URL('static', 'plugins/datatables/pdfmake.min.js')}}"></script>
+<script src="{{=URL('static', 'plugins/datatables/vfs_fonts.js')}}"></script>
+<script src="{{=URL('static', 'plugins/datatables/buttons.html5.min.js')}}"></script>
+<script src="{{=URL('static', 'plugins/datatables/buttons.print.min.js')}}"></script>
+<script src="{{=URL('static', 'plugins/datatables/dataTables.responsive.min.js')}}"></script>
+<script src="{{=URL('static', 'plugins/datatables/responsive.bootstrap.min.js')}}"></script>
+
+
 {{end}}
