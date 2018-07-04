@@ -202,7 +202,7 @@
 	        <tfoot id="collapseFiltros">
 
 	            <tr>
-	                <th class="camposTabla linksNombres">Documento</th>
+	                <th class="camposTabla linksNombres">DocumentoSS</th>
 	                <th class="camposTabla linksNombres">Código</th>
 	                <th class="camposTabla linksNombres">Tipo</th>
 	                <th class="camposTabla linksNombres">Responsable</th>
@@ -222,7 +222,19 @@
 
 
 
-
+	<div class="container">
+	    <div class="row">
+	        <div class="col-sm-12">
+	        <!-- Boton que lleva al modal -->
+	        <a class="btn btn-default buttons-print" tabindex="0" aria-controls="datatable" href="{{=URL('informacion_documentada','formatopdf',args=[doc.codigo])}}" >
+	        <span><i class="fa fa-print"></i> Listado de documentos</span></a>
+	    	
+	    	
+	      		<!-- <button type="button" class="btn btn-info" style="background-color:#0300d7; border-color:#0300d7; margin-top:20px;">Impresión</button> -->
+	  		</a>
+	    </div>
+	    </div>
+	</div>
 
 
 

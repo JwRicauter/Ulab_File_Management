@@ -37,6 +37,113 @@
   </div>
 </nav>
 
+
+<style type="text/css">
+
+    .wrapper {
+    max-width: 1000px;
+    margin: auto;
+    margin-top: 0;
+    }
+
+    .tab-wrapper {
+    text-align: center;
+    display: block;
+    margin: auto;
+    max-width: 400px;
+    }
+
+    .tabs {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    }
+
+    .tab-link {
+    margin: 0 1%;
+    list-style: none;
+    padding: 10px 20px;
+    color: #aaa;
+    cursor: pointer;
+    font-weight: 700;
+    transition: all ease 0.5s;
+    border-bottom: solid 3px rgba(255, 255, 255, 0);
+    letter-spacing: 1px;
+    }
+
+    .tab-link:hover {
+    color: #999;
+    border-color: #999;
+    }
+
+    .tab-link.active {
+    color: #333;
+    border-color: #333;
+    }
+
+    .tab-link:nth-of-type(1).active {
+    color: #1790D2;
+    border-color: #1790D2
+    }
+
+    .tab-link:nth-of-type(2).active {
+    color: #1790D2;
+    border-color: #1790D2;
+    }
+
+    .tab-link:nth-of-type(4).active {
+    color: #1790D2;
+    border-color: #1790D2;
+    }
+
+    .tab-link:nth-of-type(5).active {
+    color: #1790D2;
+    border-color: #1790D2;
+    }
+
+    .tab-link:nth-of-type(6).active {
+    color: #1790D2;
+    border-color: #1790D2;
+    }
+
+    .tab-link:nth-of-type(7).active {
+    color: #1790D2;
+    border-color: #1790D2;
+    }
+
+    .tab-link:nth-of-type(3).active {
+    color: #1790D2;
+    border-color: #1790D2;
+    }
+
+    .content-wrapper {
+    padding: 20px 80px;
+    }
+
+    .tab-content {
+    display: none;
+    text-align: left;
+    color:  #464646;
+    font-weight: 200;
+    font-size: 20px;
+    opacity: 0;
+    transform: translateY(15px);
+    animation: fadeIn 0.5s ease 1 forwards;
+    }
+
+    .tab-content.active {
+    display: block;
+    }
+
+    @keyframes fadeIn {
+    100% {
+        opacity: 1;
+        transform: none;
+    }
+}
+</style>
+
   {{for doc in documentos:}}
 
   <div class="row" style="margin-bottom: 50px;">
@@ -46,7 +153,7 @@
       <a  href="{{=URL('informacion_documentada', 'lista_documentos')}}"><i class="fa fa-arrow-left fa-2x" style="background-color: #337ab7; color: white; border-radius: 50%; padding: 10px;"></i></h2></a>
     </div>
     <div class="col-md-7">
-      <h3 style="text-align: center; margin-left: 25%"> FICHA DE DOCUMENTOS </h3>
+      <h3 class="dep-titulo text-center">Detalles del Documento: {{=doc.codigo}}</h3>
     </div>
     <div class="col-md-3">
       <form method="POST">
@@ -68,24 +175,39 @@
 
 <div class="wrapper">
     
-  <div class="tab-wrapper2">
+  <!-- <div class="tab-wrapper2">
     <ul class="tabs">
         <li class="tab-link active" data-tab="1">Información General</li>
         <li class="tab-link" data-tab="2">Historial de Revisión</li>
         <li class="tab-link" data-tab="3">Ubicación</li>
     </ul>
-  </div>
+  </div> -->
 
+  <!-<div class="content-wrapper">
+  <div class="tab-wrapper">
+    <ul class="tabs">
+      <li class="tab-link active" data-tab="1">CÓDIGO</li>
+      <li class="tab-link" data-tab="2">TIPO</li>
+      <li class="tab-link" data-tab="3">DOCUMENTO</li>
+      <li class="tab-link" data-tab="4">OBJETIVO</li>
+      <li class="tab-link" data-tab="5">ESTATUS</li>
+      <li class="tab-link" data-tab="6">PERÍODO DE REVISIÓN</li>
+      <!-- <li class="tab-link" data-tab="4">RESPONSABLE</li>
+      <li class="tab-link" data-tab="4">ELABORADO POR</li>
+      <li class="tab-link" data-tab="4">ELABORADOR DE LA REVISIÓN</li>
+      <li class="tab-link" data-tab="4">FECHA DE REVISIÓN</li> -->
+    </ul>
+  </div>
   <div class="content-wrapper">
     <div id="tab-1" class="tab-content active" role="tabpanel">
       <table class="table contenidoFicha" id="tabla_inf_general">
         <tbody>
-          <td><span style="color: #52798c;">Código</span></td><td>{{=doc.codigo}}</td>
-          <td><span style="color: #52798c;">Tipo</span></td><td>{{=doc.tipo_doc}}</td>
-          <td><span style="color: #52798c;">Documento</span></td><td>{{=doc.nombre_doc}}</td>
-          <td><span style="color: #52798c;">Objetivo</span></td><td>{{=doc.objetivo}}</td>
-          <td><span style="color: #52798c;">Estatus</span></td><td>{{=doc.estatus}}</td>
-          <td><span style="color: #52798c;">Período de Revisión</span></td><td>{{=doc.periodo_rev}}</td>
+          <td>{{=doc.codigo}}</td>
+          <!-- <td>{{=doc.tipo_doc}}</td>
+          <td>{{=doc.nombre_doc}}</td>
+          <td>{{=doc.objetivo}}</td>
+          <td>{{=doc.estatus}}</td>
+          <td>{{=doc.periodo_rev}}</td> -->
         </tbody>
       </table>
     </div>
@@ -99,26 +221,27 @@
       <table class="container">
         <thead>
           <tr>
-            <th>Responsable</th>
+          {{=doc.tipo_doc}}
+          <!--   <th>Responsable</th>
             <th>Elaborado por</th>
             <th>Elaborador de revisión de contenidos</th>
             <th>Fecha de revisión de contenido</th>
             <th>Elaborador de evisión de especificaciones</th>
             <th>Fecha de revisión de especificaciones</th>
-            <th>Fecha de revisión por el Consejo Asesor</th>
+            <th>Fecha de revisión por el Consejo Asesor</th> -->
 
           </tr>
         </thead>
         <tbody>
           <tr>
 
-            <td>{{=doc.responsable}}</td>
+            <!-- <td>{{=doc.responsable}}</td>
             <td>{{=doc.elaborador0}}, {{=doc.elaborador1}}, {{=doc.elaborador2}}, {{=doc.elaborador3}}, {{=doc.elaborador4}}.</td>
             <td>{{=doc.rev_contenido_realizado_por}}</td>
             <td>{{=doc.fecha_rev_contenido}}</td>
             <td>{{=doc.rev_especficaciones_doc_realizado_por}}</td>
             <td>{{=doc.fecha_rev_especificaciones_doc}}</td>
-            <td style="border-right: 8px solid #337ab7;">{{=doc.fecha_rev_por_consejo_asesor}}</td>
+            <td style="border-right: 8px solid #337ab7;">{{=doc.fecha_rev_por_consejo_asesor}}</td> -->
             
           </tr>
 
@@ -129,12 +252,62 @@
 
     </div>
     <div id="tab-3" class="tab-content">
-  
-      <h3><span style="color: #52798c;">Código de registro de Ubicacion:  {{=doc.cod_control_cambio}}.</span></h3>
-      <h3><span style="color: #52798c;">Carpeta electrónica:     {{=doc.registro_electronico}}.</span></h3>
-      <h3><span style="color: #52798c;">Archivo electrónico:   {{=doc.ubicacion_electronica}}  </span></h3>
-      <h3><span style="color: #52798c;">Ubicación física del documento: {{=doc.ubicacion_fisica}}.</span></h3>
-    
+        <div class="grid-container">
+            
+            <div class="grid-item">
+              Código de registro de Ubicacion:
+            </div>
+            <div class="grid-item">
+                {{=doc.cod_control_cambio}}
+            </div>
+            <div class="grid-item">
+            {{ if doc.registro_electronico != -1:}}
+              Carpeta electrónica:
+            {{pass}}
+            </div>
+            <div class="grid-item">
+                {{=doc.registro_electronico}}
+            </div>
+            <div class="grid-item">
+              Archivo electrónico:
+            </div>
+            <div class="grid-item">
+                {{=doc.ubicacion_electronica}}
+            </div>
+            <div class="grid-item">
+              Ubicación física del documento: 
+            </div>
+            <div class="grid-item">
+                {{=doc.ubicacion_fisica}}
+            </div>
+
+        {{ pass }}
+        </div>
+    </div>
+    <div id="tab-4" class="tab-content">
+      <div class="grid-container">
+        {{=doc.objetivo}}
+      </div>  
+    </div>
+
+    <div id="tab-5" class="tab-content">
+      <div class="grid-container">
+        {{=doc.estatus}}
+      </div>  
+    </div>
+
+    <div id="tab-6" class="tab-content">
+      <div class="grid-container">
+        {{=doc.periodo_rev}}
+      </div>  
+    </div>
+
+  <!-- 
+      <h3>Código de registro de Ubicacion:  {{=doc.cod_control_cambio}}.</h3>
+      <h3>Carpeta electrónica:     {{=doc.registro_electronico}}.</h3>
+      <h3>Archivo electrónico:   {{=doc.ubicacion_electronica}}  </h3>
+      <h3>Ubicación física del documento: {{=doc.ubicacion_fisica}}.</h3>
+     -->
 
     </div>
   </div>

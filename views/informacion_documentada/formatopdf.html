@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"> 
+
+    <script>
+        window.onload = function() {
+        window.print();
+    }
+</script>
+<style>
+    @media print {
+    	#cabecera{
+            border-style: none;
+            border-collapse: collapse;
+            height: auto;
+            width: 95%;
+            margin-top: 20px;
+            white-space: pre;
+            margin-left:auto;
+    	}
+        #formatopdf{
+            border-style: none;
+            border-collapse: collapse;
+            height: auto;
+            width: 95%;
+            margin-top: 30px;
+            margin-left:auto;
+        }
+
+        .titulos{
+            background-color: lightgray;
+            -webkit-print-color-adjust: exact;
+        }       
+    }
+
+    body {
+        font-size: 0.8em;
+    }
+
+    #usb {
+        height: 120px;
+    }
+    footer {
+  background-color: white;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  color: black;
+  align: center;
+}
+
+
+</style>
+</head>
+<body>
+    
+    <div id="">
+        <div id="img" >
+            <img id="usb" src="{{=URL('static','images/logo-usb.jpg')}}" class="logos">
+            <img id="usb" src="{{=URL('static','images/logo-ulab.png')}}" class="logos" align="right">
+        </div>
+        <div id="img" >
+            
+            
+        </div>
+        <table id="cabecera" border="1">
+        	<tr>
+            	<th class="titulos" rowspan="2">LISTADO DE DOCUMENTOS ULAB</th>
+        	</tr>
+
+        </table>
+        <table id="formatopdf" border="1">
+        	<thead>
+        		<tr>
+        			<th class="camposTabla linksNombres">Documento</th>
+                    <th class="camposTabla linksNombres">Código</th>
+                    <th class="camposTabla linksNombres">Tipo</th>
+                    <th class="camposTabla linksNombres">Responsable</th>
+                    <th class="camposTabla linksNombres">Vínculo</th>
+                    <th class="camposTabla linksNombres">Estatus</th>
+        		</tr>
+        		<tbody>
+                {{for doc in documentos:}}
+                <tr>
+                    <td class="camposTabla" ><a href="{{=URL('informacion_documentada', 'formatopdf', args=[doc.codigo])}}" >
+                        {{=doc.nombre_doc.upper()}}
+                    </a>
+                    </td>
+                    <td class="camposTabla" >{{=doc.codigo.upper()}}</td>
+                    <td class="camposTabla" >{{=doc.tipo_doc.upper()}}</td>
+                    <td class="camposTabla" >{{=doc.responsable.upper()}}</td>
+                    <td class="camposTabla" >Deshabilitado temporalmente</td>
+                    <td class="camposTabla" >{{=doc.estatus.upper()}}</td>
+                </tr>
+                {{pass}}           
+                </tbody>
+        	</thead>
+        </table>
+        <footer align="center" style="white-space: pre; margin-top: 30px;">Universidad Simón Bolívar, Edif. Energética, Planta Baja. Valle de Sartenejas, Baruta, Caracas, Edo. Miranda, Venezuela, 890000
+Telef.: 58 212 906-3708 / 3709 / 3710 / 3711 Fax: 58 212 906-3712 <a href="www.ulab.usb.ve">www.ulab.usb.ve</a></footer>
+    </div>
+</body>
+</html>""
