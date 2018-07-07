@@ -24,7 +24,7 @@
             -webkit-print-color-adjust: exact;
 
         }
-        #formatopdf{
+        #reporteRegistros{
             
             border-style: none;
             border-collapse: collapse;
@@ -73,7 +73,7 @@
         </div>
                 <table id="cabecera" border="1">
             <tr>
-                <th class="titulos" rowspan="2">LISTADO DE DOCUMENTOS - ULAB </th>
+                <th class="titulos" rowspan="2">LISTADO DE REGISTROS - ULAB </th>
                 <th class="titulos">Fecha</th> 
             </tr>
             <tr>
@@ -96,29 +96,30 @@
                 </td>
             </tr>
         </table>
-        <table id="formatopdf" border="1">
+        <table id="reporteRegistros" border="1">
         	<thead>
         		<tr>
-        			<th id="fondo" class="camposTabla ">Documento</th>
-                    <th id="fondo" class="camposTabla ">Código</th>
-                    <th id="fondo" class="camposTabla ">Tipo</th>
-                    <th id="fondo" class="camposTabla ">Responsable</th>
-                    <th id="fondo" class="camposTabla ">Vínculo</th>
-                    <th id="fondo" class="camposTabla ">Estatus</th>
+        			<th id="fondo" class="camposTabla ">Registro</th>
+                    <th id="fondo" class="camposTabla ">Fecha</th>
+                    <th id="fondo" class="camposTabla ">Descripción</th>
+                    <th id="fondo" class="camposTabla ">Destinatario</th>
+                    <th id="fondo" class="camposTabla ">Remitente</th>
+                    <th id="fondo" class="camposTabla ">Doc. Electronico</th>    
+                    <th id="fondo" class="camposTabla ">Archivo Físico</th>
+
         		</tr>
         		<tbody>
-                    {{for doc in documentos:}}
+                    {{for reg in registros:}}
                     <tr>
-                        <td class="camposTabla" ><a href="{{=URL('informacion_documentada', 'formatopdf', args=[doc.codigo])}}" >
-                        </a>{{=doc.nombre_doc.upper()}}
-                        </td>
-                        <td class="camposTabla" >{{=doc.codigo.upper()}}</td>
-                        <td class="camposTabla" >{{=doc.tipo_doc.upper()}}</td>
-                        <td class="camposTabla" >{{=doc.responsable.upper()}}</td>
-                        <td class="camposTabla" >Deshabilitado temporalmente</td>
-                        <td class="camposTabla" >{{=doc.estatus.upper()}}</td>
+                      <td class="camposTabla"><a href="{{=URL('informacion_documentada','reporteRegistros',args=[reg.codigo])}}" >{{=reg.codigo}}</a></td>
+                      <td class="camposTabla">{{=reg.fecha_creacion}}</td>
+                      <td class="camposTabla">{{=reg.descripcion.upper()}}</td>
+                      <td class="camposTabla">{{=reg.destinatario.upper()}}</td>
+                      <td class="camposTabla">{{=reg.remitente.upper()}}</td>
+                      <td class="camposTabla">{{=reg.doc_electronico.upper()}}</td>
+                      <td class="camposTabla">{{=reg.archivo_fisico.upper()}}</td>
                     </tr>
-                    {{pass}}           
+                    {{pass}}          
                 </tbody>
         	</thead>
         </table>

@@ -260,6 +260,20 @@ def ficha_registro():
 	print(registro)
 	return dict(registros=row)
 
+def reporteRegistros():
+
+
+	uname = request.args[0]
+	#row = db(db.registros.codigo==uname).select()
+	row=db().select(db.registros.ALL)
+
+	#documento =  db(db.registros.codigo==uname)
+
+	#return dict(registros=row,
+	#			dependencias = db().select(db.dependencias.nombre, db.dependencias.codigo_registro)) #row
+	return dict(registros=row)
+
+
 def formatopdf():
 
 
