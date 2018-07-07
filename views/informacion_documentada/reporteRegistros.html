@@ -111,7 +111,7 @@
         		<tbody>
                     {{for reg in registros:}}
                     <tr>
-                      <td class="camposTabla"><a href="{{=URL('informacion_documentada','reporteRegistros',args=[reg.codigo])}}" >{{=reg.codigo}}</a></td>
+                      <td class="camposTabla">{{=reg.codigo}}</td>
                       <td class="camposTabla">{{=reg.fecha_creacion}}</td>
                       <td class="camposTabla">{{=reg.descripcion.upper()}}</td>
                       <td class="camposTabla">{{=reg.destinatario.upper()}}</td>

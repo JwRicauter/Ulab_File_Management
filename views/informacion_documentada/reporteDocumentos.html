@@ -109,9 +109,7 @@
         		<tbody>
                     {{for doc in documentos:}}
                     <tr>
-                        <td class="camposTabla" ><a href="{{=URL('informacion_documentada', 'formatopdf', args=[doc.codigo])}}" >
-                        </a>{{=doc.nombre_doc.upper()}}
-                        </td>
+                        <td class="camposTabla" >{{=doc.nombre_doc.upper()}}</td>
                         <td class="camposTabla" >{{=doc.codigo.upper()}}</td>
                         <td class="camposTabla" >{{=doc.tipo_doc.upper()}}</td>
                         <td class="camposTabla" >{{=doc.responsable.upper()}}</td>

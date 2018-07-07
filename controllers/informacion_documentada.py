@@ -15,7 +15,7 @@ import time
 import datetime
 
 ## Pagina de Inicio del modulo de Gestion de Informacion Documentada
-def index(): 
+def index():
 	return dict(message="hello from informacion_documentada.py")
 
 
@@ -60,7 +60,7 @@ def lista_documentos():
 		##### Revisión
 		"rev_contenido_realizado_por": request.post_vars.revision_contenido,
 		"fecha_rev_contenido": request.post_vars.fecha_revision_contenidos,
-		"rev_especficaciones_doc_realizado_por": request.post_vars.revision_especificaciones,		
+		"rev_especficaciones_doc_realizado_por": request.post_vars.revision_especificaciones,
 		"fecha_rev_especificaciones_doc":  request.post_vars.fecha_revision_especificaciones,
 		"fecha_rev_por_consejo_asesor": request.post_vars.fecha_revision_consejo,
 
@@ -80,8 +80,8 @@ def lista_documentos():
 
 		##### Estatus inicial
 		"estatus":"Planificado"
-			
-		
+
+
 	}
 
 
@@ -92,7 +92,7 @@ def lista_documentos():
 		"nombre_doc":dic["nombre_doc"]
 	}
 
-	elaborado = { 
+	elaborado = {
 		"codigo": dic["codigo"],
 		"objetivo": dic["objetivo"],
 		"periodo_rev": dic["periodo_rev"],
@@ -123,7 +123,7 @@ def lista_documentos():
 	if(not('' in aprobado.values())):
 		dic["estatus"] = "Aprobado"
 
-	
+
 
 	##### Agregamos el documento
 	if(dic["codigo"]!=None):
@@ -144,7 +144,7 @@ def lista_documentos():
 			anexo_code3=dic["anexo_code3"],
 			anexo_name3=dic["anexo_name3"],
 			anexo_code4=dic["anexo_code4"],
-			anexo_name4=dic["anexo_name4"],						
+			anexo_name4=dic["anexo_name4"],
 			anexo_code5=dic["anexo_code5"],
 			anexo_name5=dic["anexo_name5"],
 			elaborador0=dic["elaborador0"],
@@ -169,8 +169,8 @@ def lista_documentos():
 			registro_electronico=dic["registro_electronico"],
 			vinculo=dic["vinculo"],
 			estatus=dic["estatus"]
-			
-		
+
+
 		)
 
 
@@ -262,26 +262,14 @@ def ficha_registro():
 
 def reporteRegistros():
 
-
-	uname = request.args[0]
-	#row = db(db.registros.codigo==uname).select()
 	row=db().select(db.registros.ALL)
 
-	#documento =  db(db.registros.codigo==uname)
-
-	#return dict(registros=row,
-	#			dependencias = db().select(db.dependencias.nombre, db.dependencias.codigo_registro)) #row
 	return dict(registros=row)
 
 
-def formatopdf():
+def reporteDocumentos():
 
-
-	uname = request.args[0]
-	#row = db(db.documentos.codigo==uname).select()
 	row=db().select(db.documentos.ALL)
-
-	#documento =  db(db.documentos.codigo==uname)
 
 	return dict(documentos=row,
 				dependencias = db().select(db.dependencias.nombre, db.dependencias.codigo_registro)) #row
@@ -359,7 +347,7 @@ def ficha():
 		documento.update(estatus="Elaborado",
 			periodo_rev=request.post_vars.periodo,
 			objetivo=request.post_vars.objetivos,
-			fecha_prox_rev= request.post_vars.fecha_prox_rev 
+			fecha_prox_rev= request.post_vars.fecha_prox_rev
 		)
 	elif (request.post_vars.revisado=="revisado"):
 
