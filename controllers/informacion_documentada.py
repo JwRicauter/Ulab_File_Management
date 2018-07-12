@@ -410,6 +410,7 @@ def ficha():
 			elaborador3= request.post_vars.elaborador4,
 			elaborador4= request.post_vars.elaborador5,
 		)
+		redirect(URL('informacion_documentada','ficha',args=[uname]))
 	elif (request.post_vars.revisado=="revisado"):
 
 		documento.update(estatus="Revisado",
