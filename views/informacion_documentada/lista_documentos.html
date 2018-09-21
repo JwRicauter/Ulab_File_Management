@@ -1,1173 +1,233 @@
 {{extend 'layout.html'}}
 {{block head}}
 
+<link rel="stylesheet" href="{{=URL('static', 'fonts/web-icons/web-icons.min.css')}}">
+<link rel="stylesheet" href="{{=URL('static', 'css/site.min.css')}}">
+<link rel="stylesheet" href="{{=URL('static', 'css/bootstrap-extend.min.css')}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+	$('.burger-menu').click(function(){
+	  $('.dropdown-content').toggleClass('show');
+	});
+	$(document).click(function(event) { 
+	    if(!$(event.target).closest('.burger-menu').length) {
+	        if($('.dropdown-content').is(":visible")) {
+	            $('.dropdown-content').toggleClass('show');
+	        }
+	    }        
+	});
 
 
-  <!-- DataTables -->
-  <link href="{{=URL('static', 'plugins/datatables/jquery.dataTables.min.css')}}" rel="stylesheet" type="text/css" />
-  <link rel="stylesheet" href="{{=URL('static', 'css/bootstrap-datepicker3.css')}}">
-  <script src="{{=URL('static', 'js/bootstrap-datepicker.min.js')}}"></script>
-  <link href="{{=URL('static', 'plugins/datatables/buttons.bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
-  <link href="{{=URL('static', 'plugins/datatables/responsive.bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+	$(document).ready(function(){
+		$('.burger-menu').click(function(){
+		  $('.dropdown-content').toggleClass('show');
+		});
+		$(document).click(function(event) { 
+		    if(!$(event.target).closest('.burger-menu').length) {
+		        if($('.dropdown-content').is(":visible")) {
+		            $('.dropdown-content').toggleClass('show');
+		        }
+		    }        
+		});
+	});
 
-  <link rel="stylesheet" type="text/css" href="{{=URL('static', 'css/servicios_modal.css')}}">
-  <link rel="stylesheet" href="{{=URL('static', 'css/servicios_listado.css')}}">
-  <link rel="stylesheet" href="{{=URL('static', 'css/servicios_template_modal.css')}}">
-  
-	<script src="{{=URL('static', 'js/servicios_template_modal.js')}}"></script>
+</script>
 
-	<!-- Web2py JS - Especialmente para AJAX -->
-	<script src="{{=URL('static', 'js/web2py.js')}}"></script>
 
-<style>
-
-	.notif-wrap {
-		margin-top: 30px;
-		
-	}
-
-	.doc-notif {
-		background-color: rgba(103,147,252,0.8);
-		padding-top: 10px;
-		padding-bottom: 10px;
-		color: #FFF;
-		font-weight: 500;
+<style type="text/css">
+	.search {
+		display: block;
+		margin-left: 1300px;
+		margin-right: auto;
+		margin-bottom: auto;
+		margin-top: -30px;
 		cursor: pointer;
 	}
-	.notif-drop { width:150%; margin-left: -120px; border: 1px solid #c6c6c6; border-radius: 3px; padding-bottom: 0px; padding-top:0px; }
-	.notif-drop li div.notif-box { padding-top: 10px; padding-bottom: 10px; padding-left: 10px; background-color: #FFF; color: #11455b; border-bottom:1px solid rgba(0,0,0,0.05)}
-	.notif-drop li div.notif-box.unread { background-color: rgba(0,0,0,0.03);  }
-	.notif-drop li div.notif-box:hover { background-color: rgba(0,0,0,0.05);  }
-	.notif-drop li div.notif-box a { color: #11455b; }
-	.notif-drop li div.notif-box a:hover { text-decoration: none; }
 
-	.notif-drop li div.notif-box p { margin-bottom: 1px; }
+	.burger-menu {
+		display: block;
+		margin-left: 100px;
+		margin-right: auto;
+		margin-bottom: auto;
+		margin-top: 1px;
+		cursor: pointer;
+	}
 
-	.notif-drop p.notif-timestamp { text-align: right; font-size: 12px; color: rgba(0,0,0,0.6); padding-right: 10px; }
+	.dropdown {
+	    position: relative;
+	    display: inline-block;
+	}
 
-	.notif-drop .more-notifs  { text-align: center; background-color: rgba(103,147,252,0.5); padding-bottom: 1px; padding-top: 10px;}
-	.notif-drop .more-notifs p a { color : #000; font-weight: 600; color: #FFF;  }
-	.notif-drop .more-notifs p a:hover { text-decoration: none; }
+	.dropdown-content {
+	    display: none;
+	    position: absolute;
+	    background-color: white;
+	    min-width: 250px;
+	    z-index: 1;
+	}
 
+	.dropdown-content a {
+	    color: gray;
+	    padding: 15px 8px;
+		text-align: center;
+	    text-decoration: none;
+	    display: block;
+		box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+		font-size: 18px;
+		font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
+	}
+
+	.dropdown-content a:hover {
+		background-color: #ffffff;
+		color: black;
+	}
+
+	.dropdown .dropdown-content.show {
+	    display: block;
+	}
+
+	.dropdown:hover .dropbtn {
+	    background-color: #ffffff;
+	}
 </style>
 
 
 {{end}}
 {{block center}}
-<nav class="navbar navbar-inverse navbar-fixed-top breadcrumbs">
-  <div class="breadcrumb">
-  <a class="breadcrumb-item" href="{{=URL('..', 'sigulab2')}}">Inicio</a>
-  <a class="breadcrumb-item" href="{{=URL('..', 'sigulab2','informacion_documentada')}}">Control de Documentos</a>
-  <span class="breadcrumb-item active" >Listado de Documentos</span>
-  </div>
-</nav>
 
-<div class="container-fluid" id="container-body">
-	<!--<nav aria-label="breadcrumb">
-			<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="#">Inicio</a></li>
-			<li class="breadcrumb-item active" aria-current="page">Documentos</li>
-			</ol>
 
-	</nav><-->
-	<div class="row">
-		<div class="col-md-3">
-	      <a href="{{=URL('..', 'sigulab2','informacion_documentada','')}}"><i class="fa fa-arrow-left fa-2x" style="background-color: #337ab7; color: white; border-radius: 50%; padding: 10px; margin-left: 15%;"></i></h2></a>
-	    </div>  
-		<div class="col-md-6">
-			<h3 style="text-align: center;"> CONTROL DE DOCUMENTOS </h3>
-		</div>
-		<div class="col-md-3">
+
+
+
+
+<div class="row">
+	<div class="text-center" style="margin-top: -4%;">
+		<h3>
+			CONTROL DE DOCUMENTOS
+
+			<div class="dropdown">
+		  	<i class="fa fa-bars burger-menu" ></i>  
+				<div class="dropdown-content">
+					<a href="{{=URL('..', 'sigulab2','informacion_documentada','')}}"><i class="fa fa-arrow-left"></i>  Regresar</a>
+			    <a href="#"><i class="fa fa-plus"></i>  AgregarDoc</a>
+			    <a href="#"><i class="fa fa-download"></i>  DescargarDoc</a>
+			  </div>
+			</div>
+
+		</h3>
+	</div>
+</div>
+
+<br><br><br><br>
+
+<div class="row">
+
+	<div class="col-xl-1 col-lg-2">
+	</div>
+
+	<div class="col-xl-5 col-lg-2">
+		<div class="card-box" style="background-color: white; padding: 30px; box-shadow: 2px 5px 20px rgba(119, 119, 119, 0.5);">
 			
+			<div class="widget-box-2">
+				<div class="widget-detail-2">
+					 <div class="white text-center">
+	            <i class="icon icon-circle icon-2x wb-clipboard bg-blue-600" aria-hidden="true"></i>
 
-		    <a class="btn btn-default buttons-print" tabindex="0" aria-controls="datatable" href="{{=URL('informacion_documentada','reporteDocumentos')}}" style="border-radius: 50%; text-align: center; background-color: #337ab7; margin-right: 20px; margin-left: 20%;" target="_blank">
-		    	<span><i class="fa fa-download fa-2x"></i></span>
-		    </a>
-	    	
-			<a href="#">
-				<button type="button" id="botonModal" data-toggle="modal" data-target="#adddoc" class="btn btn-floating btn-info" style="border-radius: 50%; text-align: center; background-color: #337ab7; margin-right: 20px;"><i class="fa fa-plus fa-2x" aria-hidden="true"></i></button>
-			</a>
-
-
-
-			<div class=" notif-wrap text-center dropdown" style="display: inline-block;">
-
-			    <div class="doc-notif" data-toggle="dropdown" style="border-radius: 50%; background-color: #337ab7; margin-left: 2px;">
-			        <i class="fa fa-bell" style="margin-left: 5px;"></i> 
-			        
-			        <span class="badge" style="margin-right: 5px;"> {{=cant_doc_vencidos}} </span>
-			    </div>
-
-			    <ul class="dropdown-menu notif-drop">
-			    {{for venc in documentos_vencidos:}}	
-			        
-			        <li>
-			            <div class="notif-box unread">
-			                <a href="{{=URL('informacion_documentada','ficha',args=[venc.codigo])}}"" target="_blank">
-			                 <p class="notif-content"> {{=venc.nombre_doc}}  </p>
-			                 <p class="notif-timestamp">{{=venc.codigo}}</p>
-			                </a>
-			            </div>    
-			        </li>
-			        
-
-			    {{pass}}
-			    </ul>
-			</div>	
-
-
-
-		</div>
-	</div>	
-
-	<div class="row">
-
-
-		<nav class="indicadores" style="background-color: #FAFAFA;">			
-			<div class="row">
-
-			  <div style="margin-right: 3%; margin-left: 3%;">
-
-				<div class="col-lg-2"></div>
-
-				<div class="col-lg-2 col-xs-6">
-
-				  <a href="#">
-				  <div class="card-box" style="background-color: #337ab7; padding: 20px; margin-top: 40px; box-shadow: 2px 5px 20px rgba(119, 119, 119, 0.5);">
-					<h4 style="color: white; font-size: 25px; margin-bottom: 8px;">Planificado</h4>
-
-					<div class="widget-box-2">
-						<div class="widget-detail-2">
-							<i class="fa fa-calendar-check-o fa-4x" style="color: white;"></i>
-
-							<h2 class="m-b-0" data-plugin="counterup" style="color: white; display: inline-block; font-size: 50px; text-align: right; ">{{=doc_planificacion}} </h2>
-						</div>
-
-					</div>
-				  </div>
-				  </a>
-
+	          </div>
 				</div>
-				<!-- ./col -->
-				<div class="col-lg-2 col-xs-6">
+				<br><br><br>
+					<div class="counter counter-md counter text-right">
+	        <div class="counter-number-group">
+	          <span class="counter-number">25</span>
+	          <span class="counter-number-related text-capitalize">docs</span>
+	        </div>
+	        <div class="counter-label text-capitalize font-size-16">en planificación</div>
+	        </div>
 
-				  <a href="#">
-				  <div class="card-box" style="background-color: #337ab7; padding: 20px; margin-top: 40px; box-shadow: 2px 5px 20px rgba(119, 119, 119, 0.5);">
-					<h4 style="color: white; font-size: 25px; margin-bottom: 8px;">Elaborado</h4>
-
-					<div class="widget-box-2">
-						<div class="widget-detail-2">
-							<i class="fa fa-pencil fa-4x" style="color: white; display: inline-block;"></i> 
-
-							<h2 class="m-b-0" data-plugin="counterup" style="color: white; display: inline-block; font-size: 50px; text-align: right;"> {{=doc_elaboracion}}</h2>
-						</div>
-
-					</div>
-				  </div>
-				  </a>
-
-				</div>
-
-				<div class="col-lg-2 col-xs-6">
-				  <!-- small box -->
-				
-				  <a href="#">
-				  <div class="card-box" style="background-color: #337ab7; padding: 20px; margin-top: 40px; box-shadow: 2px 5px 20px rgba(119, 119, 119, 0.5);">
-					<h4 style="color: white; font-size: 25px; margin-bottom: 8px;">Revisado</h4>
-
-					<div class="widget-box-2">
-						<div class="widget-detail-2">
-							<i class="fa fa-search fa-4x" style="color: white; display: inline-block;"></i> 
-							<h2 class="m-b-0" data-plugin="counterup" style="color: white; display: inline-block; font-size: 50px;"> {{=doc_revision}} </h2>
-						</div>
-
-					</div>
-				  </div>
-				  </a>
-				  
-				</div>
-
-				<div class="col-lg-2 col-xs-6">
-
-				  <a href="#" >
-				  <div class="card-box" style="background-color: #337ab7; padding: 20px; margin-top: 40px; box-shadow: 2px 5px 20px rgba(119, 119, 119, 0.5);">
-					<h4  style="color: white; font-size: 25px; margin-bottom: 8px;">Aprobado</h4>
-
-					<div class="widget-box-2">
-						<div class="widget-detail-2">
-							<i class="fa fa-check-circle fa-4x" style="color: white; display: inline-block;"></i> 
-
-							<h2 class="m-b-0" data-plugin="counterup" style="color: white; display: inline-block; font-size: 50px;"> {{=doc_aprobado}} </h2>
-						</div>
-
-
-
-					</div>
-				  </div>
-				  </a>
-
-				</div>
-
-				<div class="col-lg-2"></div>
-
-			  </div>   	
-					
-				
-				
-		</nav>
-
-	<div>
-
-</div>
-
-<div style="margin-top: 0px; padding: 40px;"></div>
-
-
-<div class="container" style="padding: 0px;">
-	<div class="row">
-		<br>
-		<div class="table-responsive no-padding no-margin">
-	    <table id="datatable" class="table table-hover table-striped dt-responsive display tablaListado" cellspacing="0" width="100%">
-	    	<div id="buttons" style="text-align: right; " >
-		  
-
-		</div>
-		<br>
-
-		
-			<thead>
-				<tr id="titulosListado">
-					<th class="camposTabla linksNombres">Documento</th>
-					<th class="camposTabla linksNombres">Código</th>
-					<th class="camposTabla linksNombres">Tipo</th>
-					<th class="camposTabla linksNombres">Responsable</th>
-					<th class="camposTabla linksNombres">Vínculo</th>
-					<th class="camposTabla linksNombres">Estatus</th>
-				</tr>
-			</thead>
-
-			<tbody>
-				{{for doc in documentos:}}
-					{{if doc.visibilidad == "No":}}
-						{{if (doc.dependencia_asociada.split("\n")[1])[:len(doc.dependencia_asociada.split("\n")[1]) - 1] == depAsoc:}}
-							<tr>
-									<td class="camposTabla" style="text-align: left; padding-left: 34px" ><a href="{{=URL('informacion_documentada','ficha',args=[doc.codigo])}}">{{=doc.nombre_doc.upper()}}</a>
-									</td>
-									<td class="camposTabla" >{{=doc.codigo.upper()}}</td>
-									<td class="camposTabla" >{{=doc.tipo_doc.upper()}}</td>
-									<td class="camposTabla" >{{=doc.responsable.upper()}}</td>
-									<td class="camposTabla" ><button type="button">Descargar</button></td>
-									<td class="camposTabla" >{{=doc.estatus.upper()}}</td>
-
-							</tr>
-						{{else:}}
-
-
-						{{pass}}
-
-
-					{{else:}}
-						<tr>
-								<td class="camposTabla" style="text-align: left; padding-left: 34px" ><a href="{{=URL('informacion_documentada','ficha',args=[doc.codigo])}}">{{=doc.nombre_doc.upper()}}</a>
-								</td>
-								<td class="camposTabla" >{{=doc.codigo.upper()}}</td>
-								<td class="camposTabla" >{{=doc.tipo_doc.upper()}}</td>
-								<td class="camposTabla" >{{=doc.responsable.upper()}}</td>
-								<td class="camposTabla" ><button type="button" href="{{=doc.vinculo}}" target="_blank">Descargar</button></td>
-								<td class="camposTabla" >{{=doc.estatus.upper()}}</td>
-
-						</tr>
-					{{pass}}
-				{{pass}}	           
-			</tbody>
-
-			<tfoot id="collapseFiltros">
-
-				<tr>
-					<th class="camposTabla linksNombres">Documento</th>
-					<th class="camposTabla linksNombres">Código</th>
-					<th class="camposTabla linksNombres">Tipo</th>
-					<th class="camposTabla linksNombres">Responsable</th>
-					<th class="camposTabla linksNombres">Link de Descarga</th>
-					<th class="camposTabla linksNombres">Estatus</th>
-				</tr>
-			</tfoot>
-
-		  </table>
-		</div>
-	  </div>
-	</div> 
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="modal fade" id="adddoc" role="dialog">
-<div class="modal-dialog">
-
-  <!-- Modal content-->
-  <div class="modal-content">
-
-		<!-- Modal Header -->
-		<div class="modal-header addHeader">
-			<div class="row addRow" id="rowHeader">
-				<div class="col-sm-1" id="col1Header">
-					<div class="container" id="plus">
-						<h1 id="agregar">+</h1>
-					</div>
-				</div>
-					<div class="col-sm-11" id="col11Header">
-					<h4 class="modal-title" id="nuevoServicio">Agregar Documento</h4>
-				</div>
 			</div>
 		</div>
-		<!-- Fin Modal Header -->
+	</div>
+
+
+	<div class="col-xl-5 col-lg-2">
+		<div class="card-box" style="background-color: white; padding: 30px; box-shadow: 2px 5px 20px rgba(119, 119, 119, 0.5);">
 			
-		<!-- Modal Body -->
-		<div class="modal-body addBody">
-		<div class="row addRow">
-			<div class="col-md-12 form-box">
-				<form id="formularioCarga" class="registration-form" method="post">
+			<div class="widget-box-2">
+				<div class="widget-detail-2">
+					 <div class="white text-center">
+	            <i class="icon icon-circle icon-2x wb-pencil bg-blue-600" aria-hidden="true"></i>
+
+	          </div>
+				</div>
+				<br><br><br>
+					<div class="counter counter-md counter text-right">
+	        <div class="counter-number-group">
+	          <span class="counter-number">25</span>
+	          <span class="counter-number-related text-capitalize">docs</span>
+	        </div>
+	        <div class="counter-label text-capitalize font-size-16">en elaboración</div>
+	        </div>
 
-					<!-- Primer Paso -->
-					<fieldset class="formField">
-						<div class="form-bottom" data-step="1" data-title="Primer Paso">
-							<!-- Aqui va la barra lateral -->
-							<div class="col-sm-1 col1Body">
-								<span class="step activePass">1</span>
-								<span class="step">2</span>
-								<span class="step">3</span>
-								<span class="step">4</span>             
-								<span class="step">5</span>
-								<span class="step">6</span>
-								<span class="step">7</span>
-							</div>
-							<!-- Aqui va la informacion -->
-							<div class="col-sm-11 col11Body">
-								<h4 class="titulosForm">Fase de Planificación</h4>
-
-								<!-- Campo de Nombre del Documento -->
-								<div class="form-group">
-									<h5>Nombre del Documento</h5>
-									<input type="text" class="input" name="nombre_documento" id="nombre_documento" placeholder="Nombre del Documento" required>
-								</div>
-
-								<!-- Campo de Tipo del Documento -->
-								<div class="form-group" id="tipos"> 
-									<h5>Tipo del Documento</h5>
-									<select name="tipo" id="tipo" class="input" required>
-										<option value=""></option>
-										<option value="Referente Estrategico">Referente Estratégico</option>
-										<option value="Reglamento">Reglamento</option>
-										<option value="Manual de Organización">Manual de Organización</option>
-										<option value="Manual de Calidad">Manual de Calidad</option>
-										<option value="Manual de Proceso de Gestión">Manual de Proceso de Gestión</option>
-										<option value="Manual de Proceso Técnico">Manual de Proceso Técnico</option>
-										<option value="Manual de Uso">Manual de Uso</option>
-										<option value="Otro">Otro</option>
-									</select>
-									<div id="otros"></div>
-								</div>
-
-								<!-- Campo de Responsable del Documento -->
-								<div class="form-group"> 
-									<h5>Responsable</h5>
-									<select name="responsable" id="responsable" class="input" onchange="get_code(this)" required>
-										<option value=""></option>
-										{{for dep in dependencias:}}
-											<option id="{{=dep.codigo_registro}}" value="{{=dep.nombre}}">{{=dep.nombre}}</option>
-										{{pass}}
-									</select>
-								</div>
-								<!-- Campo de Código -->
-								<div class="form-group">
-									<h5>Código del documento</h5>
-									<input type="text" class="input" name="codigo" id="codigo" placeholder="Código Documento" onchange="codigoDoc()">
-								</div>
-
-
-
-								<!-- Campo de Objetivos -->
-								<div class="form-group">
-									<h5>Objetivos del documento</h5>
-									<input type="text" class="input" name="objetivos" id="objetivos" placeholder="Objetivos"> 
-								</div>
-
-								<!-- Campo de Período de Revisión -->
-								<div class="form-group">
-									<h5>Período de Revisión</h5>
-									<select name="periodo" id="periodo" class="input">
-										<option value=""></option>
-										<option value="Semestral">Semestral</option>
-										<option value="Anual">Anual</option>
-										<option value="Bienal">Bienal</option>
-										<option value="Trienal">Trienal</option>
-										<option value="Quinquenal">Quinquenal</option>
-									</select> 
-								</div>
-
-
-								<div style="position: fixed; bottom: 0; right: 0;">
-									<button type="submit" class="btn btn-submit botonForm" id="submit" form="formularioCarga" name="envio" value="edicion" ><i class="fa fa-floppy-o"></i></button>   
-									<button type="button" class="btn btn-next add botonForm"><i class="fa fa-arrow-right"></i></button>
-								</div>	
-							</div>
-						</div>	
-					</fieldset>
-					<!-- Fin Primer Paso -->
-								
-					<!-- Segundo Paso -->
-					<fieldset class="formField">
-						<div class="form-bottom" data-step="2" data-title="Segundo Paso">
-						<!-- Aqui va la barra lateral -->
-						<div class="col-sm-1 col1Body">
-							<span class="step">1</span>
-							<span class="step activePass">2</span>
-							<span class="step">3</span>
-							<span class="step">4</span> 
-							<span class="step">5</span>
-							<span class="step">6</span>
-							<span class="step">7</span>
-						</div>
-
-						<!-- Aqui va la informacion -->
-						<div class="col-sm-11 col11Body">
-							
-							<h4 class="titulosForm">Fase de Elaboración</h4>
-							
-
-							<!-- Campo de Número de Anexos -->
-							<div class="form-group">
-								<h5>Anexos</h5>
-
-								<div id="p_anexo">
-									<p>
-
-									</p>
-								</div>
-
-								<a href="#" id="addAnexo"><span class="fa fa-plus">Agregar Anexo</span></a>
-							</div>
-
-
-							<div style="position: fixed; bottom: 0; right: 0;">
-								<button type="button" class="btn btn-previous botonForm"><i class="fa fa-arrow-left"></i></button>
-								<button type="button" class="btn btn-next botonForm"><i class="fa fa-arrow-right"></i></button>
-							</div>
-						</div>
-					</fieldset>
-					<!-- Fin Segundo Paso -->
-
-					<!-- Tercer Paso -->
-					<fieldset class="formField">
-						<div class="form-bottom" data-step="3" data-title="Tercer Paso">
-						<!-- Aqui va la barra lateral -->
-						<div class="col-sm-1 col1Body">
-							<span class="step">1</span>
-							<span class="step">2</span>
-							<span class="step activePass">3</span>
-							<span class="step">4</span> 
-							<span class="step">5</span>
-							<span class="step">6</span>
-							<span class="step">7</span>
-						</div>
-
-						<!-- Aqui va la informacion -->
-						<div class="col-sm-11 col11Body">
-							
-							<h4 class="titulosForm">Fase de Elaboración   -   Elaboradores</h4>
-
-
-
-							<!-- Campo de Elaboradores del Documento -->
-							<div class="form-group">
-								<h5>Elaboradores del documento</h5>
-								
-								<div id="p_scents">
-									<p>
-										<input type="text" id="p_scnt" size="20" name="elaborador0" placeholder="Ingrese un elaborador" />
-									</p>
-								</div>
-
-								<a href="#" id="addScnt"><span class="fa fa-plus">Agregar Elaborador</span></a>
-																			
-							</div>
-
-
-							<!-- Campo de Fecha de entrega para revisión del Documento -->
-							<div class="form-group">
-								<h5 >Fecha de elaboración</h5>
-								<input class="datepicker" name="fecha_prox_rev" id="fecha_prox_rev" type="text" data-date-end-date="0d" data-placement="bottom" data-trigger="manual" data-content="Seleccione una fecha" readonly="">
-							</div>
-
-					
-						
-							<div style="position: fixed; bottom: 0; right: 0;">
-								<button type="button" class="btn btn-previous botonForm"><i class="fa fa-arrow-left"></i></button>
-								<button type="submit" class="btn btn-submit botonForm" id="submit" form="formularioCarga" name="envio" value="edicion" ><i class="fa fa-floppy-o"></i></button>  
-								<button type="button" class="btn btn-next botonForm"><i class="fa fa-arrow-right"></i></button>
-							</div>	
-						</div>
-					</fieldset>
-					<!-- Fin Tercer Paso -->					
-
-					<!-- Cuarto Paso -->
-					<fieldset class="formField">
-						<div class="form-bottom" data-step="4" data-title="Cuarto Paso">
-						<!-- Aqui va la barra lateral -->
-							<div class="col-sm-1 col1Body">
-								<span class="step">1</span>
-								<span class="step">2</span>
-								<span class="step">3</span>
-								<span class="step activePass">4</span>
-								<span class="step">5</span> 
-								<span class="step">6</span>
-								<span class="step">7</span> 
-							</div>
-							
-							<!-- Aqui va la informacion -->
-							<div class="col-sm-11 col11Body">
-							<h4 class="titulosForm"> Fase de Revisión </h4>
-
-							<!-- Campo de responsable de la revisión de contenidos -->
-							<div class="form-group">
-								<h5>Revisión de contenido</h5>
-								<input type="text" class="input" name="revision_contenido" id="revision_contenido" placeholder="Contenido revisado por:" />
-							</div> 
-
-							<!-- Campo de fecha de la revisión de contenidos -->
-							<div class="form-group">
-								<h5>Fecha de revisión de contenido</h5>
-								<input class="datepicker" name="fecha_revision_contenidos" id="fecha_revision_contenidos" type="text" data-placement="bottom" data-trigger="manual" data-content="Seleccione una fecha">
-								<h6 style="color:red" id="error_rev_cont">La fecha de revisión de contenido debe ser posterior a la fecha de elaboración</h6>
-							</div> 
-
-							<!-- Campo de responsable de la revisión de especificaciones -->
-							<div class="form-group">
-								<h5>Revisión de especificaciones</h5>
-								<input type="text" class="input" name="revision_especificaciones" id="revision_especificaciones" placeholder="Especificaciones realizadas por:" /> 
-							</div> 
-
-							<!-- Campo de fecha de la revisión de especificaciones -->
-							<div class="form-group">
-								<h5>Fecha de revisión de especificaciones</h5>
-								<input class="datepicker" name="fecha_revision_especificaciones" id="fecha_revision_especificaciones" type="text" data-placement="bottom" data-trigger="manual" data-content="Seleccione una fecha">
-								<h6 style="color:red" id="error_rev_esp">La fecha de revisión de especificaciones debe ser posterior a la fecha de elaboración</h6>
-							</div> 
-
-
-							<!-- Campo de confirmación si fué o no revisado por el consejo -->
-							<div class="form-group">
-								<label>Revisión por el Consejo Asesor - ULAB</label>
-								<br>
-								<input type="radio" name="revision_consejo" value="1" onclick="agregarFecha()">Si
-								<br>
-								<input type="radio" name="revision_consejo" value="2" onclick="eliminarFecha()">No
-								<div id="containerRevision"/>
-							</div> 
-							<div id="relleno"></div>
-
-							<div style="position: fixed; bottom: 0; right: 0;">
-								<button type="button" class="btn btn-previous botonForm"><i class="fa fa-arrow-left"></i></button>
-								<button type="submit" class="btn btn-submit botonForm" id="submit" form="formularioCarga" name="envio" value="edicion" ><i class="fa fa-floppy-o"></i></button>  
-								<button type="button" class="btn btn-next botonForm"><i class="fa fa-arrow-right"></i></button>
-							</div>	
-						</div>
-					</fieldset>
-					<!-- Fin Cuarto Paso -->
-
-
-					<!-- Quinto Paso -->
-					<fieldset class="formField">
-							<div class="form-bottom" data-step="5" data-title="Quinto Paso">
-							<!-- Aqui va la barra lateral -->
-								<div class="col-sm-1 col1Body">
-									<span class="step">1</span>
-									<span class="step">2</span>
-									<span class="step">3</span>
-									<span class="step">4</span>
-									<span class="step activePass">5</span> 
-									<span class="step">6</span>
-									<span class="step">7</span>
-								</div>
-
-								<!-- Aqui va la informacion -->
-								<div class="col-sm-11 col11Body" >
-								<h4 class="titulosForm"> Fase de Aprobación </h4>
-
-
-								<!-- Campo de responsable de aprobación-->
-								<div class="form-group">
-									<h5>Responsable de aprobación</h5>
-									<input type="text" class="input" name="aprobado" id="aprobado" placeholder="Aprobado Por:" /> 
-								</div>
-
-								<!-- Campo de fecha de aprobación -->
-								<div class="form-group">
-									<h5>Fecha de aprobación</h5>
-									<input class="datepicker" name="fechaAprobacion" id="fechaAprobacion" type="text" data-placement="bottom" data-trigger="manual" data-content="Seleccione una fecha"> 
-									<h6 style="color:red" id="error_apro_1">La fecha de aprobación debe ser superior a la fecha de revisión de contenido</h6>
-              						<h6 style="color:red" id="error_apro_2">La fecha de aprobación debe ser superior a la fecha de revisión de especificaciones</h6>  
-								</div>	
-								
-								<!-- Campo de código de registro de aprobación -->
-								<div class="form-group">
-									<h5>Código de registro de la aprobación</h5>
-									<input type="text" class="input" name="cod_registro" id="cod_registro" placeholder="Código de Registro de Aprobacion" /> 
-								</div>
-
-				
-							<div style="position: fixed; bottom: 0; right: 0;">
-								<button type="button" class="btn btn-previous botonForm"><i class="fa fa-arrow-left"></i></button>
-								<button type="button" class="btn btn-next botonForm"><i class="fa fa-arrow-right"></i></button>
-							</div>	
-						</div>
-					</fieldset>
-					<!-- Fin Quinto Paso -->
-
-					<!-- Sexto Paso -->
-					<fieldset class="formField">
-							<div class="form-bottom" data-step="6" data-title="Sexto Paso">
-							<!-- Aqui va la barra lateral -->
-								<div class="col-sm-1 col1Body">
-									<span class="step">1</span>
-									<span class="step">2</span>
-									<span class="step">3</span>
-									<span class="step">4</span> 
-									<span class="step">5</span>
-									<span class="step activePass">6</span>
-									<span class="step">7</span>
-								</div>
-
-							<!-- Aqui va la informacion -->
-								<div class="col-sm-11 col11Body" >
-								<h4 class="titulosForm">Ubicación del Documento</h4>
-
-								<!-- Campo de ubicación física del documento -->
-								<div class="form-group">
-									<h5>Ubicación física</h5>
-									<input type="text" class="input" name="ubicacion_fisica" id="ubicacion_fisica" />
-									<h6 style="color: gray;">Indique la carpeta, archivo, estante u otro se puede acceder al documento</h6>
-								</div>  
-
-								<!-- Campo de ubicación electrónica del documento -->
-								<div class="form-group">
-									<h5>Ubicación electrónica</h5>
-									<input type="text" class="input" name="archivo_el" id="archivo_el"/> 
-									<h6 style="color: gray;">Indique el nombre del archivo electrónico, carpeta o ruta para acceder al el mismo</h6>
-								</div>
-
-								<!-- Campo de vínculo del documento -->
-								<div class="form-group">
-									<h5>Vínculo</h5>
-									<input type="text" class="input" name="vinculo" id="vinculo" placeholder="Ingrese el vinculo" /> 
-								</div>
-
-							<div style="position: fixed; bottom: 0; right: 0;">
-								<button type="button" class="btn btn-previous botonForm"><i class="fa fa-arrow-left"></i></button>
-								<button type="button" class="btn btn-next botonForm"><i class="fa fa-arrow-right"></i></button>
-							</div>
-						</div>
-					</fieldset>
-					<!-- Fin Sexto Paso -->
-
-
-
-					<!-- Séptimo Paso -->
-					<fieldset class="formField">
-							<div class="form-bottom" data-step="7" data-title="Septimo Paso">
-							<!-- Aqui va la barra lateral -->
-								<div class="col-sm-1 col1Body">
-									<span class="step">1</span>
-									<span class="step">2</span>
-									<span class="step">3</span>
-									<span class="step">4</span> 
-									<span class="step">5</span>
-									<span class="step">6</span>
-									<span class="step activePass">7</span>
-								</div>
-
-								<!-- Aqui va la informacion -->
-								<div class="col-sm-11 col11Body" >
-								<h4 class="titulosForm">Registro de Control de Cambios del documento</h4>
-
-
-								<!-- Campo del control de cambios -->
-								<div class="form-group">
-									<h5>Código de registro de control de cambios</h5>
-									<input type="text" class="input" name="cod_controlCambios" id="cod_controlCambios" placeholder="Cod Registro de control de cambios" /> 
-								</div>
-
-								<!-- Campo de la fecha del control de cambios -->
-								<div class="form-group">
-									<h5>Fecha de control de cambios</h5>
-									<input class="datepicker" name="fechaControlCambios" id="fechaControlCambios" type="text" data-placement="bottom" data-trigger="manual" data-content="Seleccione una fecha">
-									<h6 style="color:red" id="error_cambios" data-date-end-date="0d">La fecha de control de cambios debe ser superior a la fecha de elaboración</h6>
-								</div>
-
-								<!-- Campo de Elaborado por -->
-								<div class="form-group">
-									<h5>Elaborador del control de cambios</h5>
-									<input type="text" class="input" name="ccelaborado" id="ccelaborado" placeholder="Elaborado por" /> 
-								</div>
-
-								<!-- Campo de Ubicación del registro en formato físico -->
-								<div class="form-group">
-									<h5>Ubicación del registro en formato físico</h5>
-									<input type="text" class="input" name="registro_fisico" id="registro_fisico" /> 
-									<h6 style="color: gray;">Indique la carpeta, archivo, estante u otro se puede acceder al documento</h6>
-								</div>
-
-								<!-- Campo deUbicación del registro en formato físicoo -->
-								<div class="form-group">
-									<h5>Ubicación del registro en formato electrónico</h5>
-									<input type="text" class="input" name="registro_electronico" id="registro electronico" /> 
-									<h6 style="color: gray;">Indique el nombre del archivo electrónico, carpeta o ruta para acceder al el mismo</h6>
-								</div>
-
-								<div style="position: fixed; bottom: 0; right: 0;">
-									<button type="button" class="btn btn-previous botonForm"><i class="fa fa-arrow-left"></i></button>  
-									<button type="submit" class="btn btn-submit botonForm" id="submit" form="formularioCarga" name="envio" value="edicion" ><i class="fa fa-floppy-o"></i></button>  
-								</div>
-						</div>
-					</fieldset>
-					<!-- Fin Sexto Paso -->
-
-
-
-
- 
-
-
-
-
-				</form>
 			</div>
-		</div>               
 		</div>
-	</div>	
-</div>
-</div>
+	</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script type="text/javascript">
-
-	function get_code(i){
-		cod = i[i.selectedIndex].id; // get value
-		document.getElementById("codigo").value = cod + "-";
-	}
-	$("#error_rev_cont").hide();
-	$("#error_rev_esp").hide();
-	$("#con_as_div").hide();
-	$("#error_con_1").hide();
-	$("#error_con_2").hide();
-	$("#error_apro_1").hide();
-  $("#error_apro_2").hide();
-  $("#error_cambios").hide();
-	var fecha_prox_rev;
-	var fecha_revision_contenidos;
-	var fecha_revision_especificaciones;
-	var fecha_revision_consejo;
-	var fechaAprobacion;
-	var flag_validation;
-  var fechaControlCambios;
-	$("#fecha_prox_rev").change(function () {
-		fecha_prox_rev = $("#fecha_prox_rev").val();
-		let fecha = fecha_prox_rev.split("-");
-		let fecha_end = new Date(fecha[0],(fecha[1]-1),fecha[2]);
-		$('#fecha_revision_contenidos').attr('data-date-start-date',fecha_end)	
-		$('#fecha_revision_especificaciones').attr('data-date-start-date',fecha_end)	
-	});
-
-	$("#fecha_revision_contenidos").change(function () {
-		fecha_revision_contenidos = $("#fecha_revision_contenidos").val();
-		if(validate_fechaMayorQue(fecha_prox_rev,fecha_revision_contenidos)){
-			$("#error_rev_cont").hide()
-			$(".enviar").removeAttr("disabled")
-		}else{
-			$("#error_rev_cont").show()
-			$(".enviar").attr('disabled','disabled')
-
-		}
-		if(flag_validation == 1){
-			fecha_revision_consejo = $("#fecha_revision_consejo").val();
-			if(validate_fechaMayorQue(fecha_revision_contenidos,fecha_revision_consejo)){
-				$("#error_con_1").hide()
-				$(".enviar").removeAttr("disabled")
-			}else{
-				$("#error_con_1").show()
-				$(".enviar").attr('disabled','disabled')
-			}
-
-			if(validate_fechaMayorQue(fecha_revision_especificaciones,fecha_revision_consejo)){
-				$("#error_con_2").hide()
-				$(".enviar").removeAttr("disabled")
-			}else{
-				$("#error_con_2").show()
-				$(".enviar").attr('disabled','disabled')
-			}
-		}
-	});
-
-	$("#fecha_revision_especificaciones").change(function () {
-		fecha_revision_especificaciones = $("#fecha_revision_especificaciones").val();
-		if(validate_fechaMayorQue(fecha_prox_rev,fecha_revision_especificaciones)){
-			$("#error_rev_esp").hide()
-			$(".enviar").removeAttr("disabled")
-		}else{
-			$("#error_rev_esp").show()
-			$(".enviar").attr('disabled','disabled')
-		}
-		if(flag_validation == 1){
-			fecha_revision_consejo = $("#fecha_revision_consejo").val();
-			if(validate_fechaMayorQue(fecha_revision_contenidos,fecha_revision_consejo)){
-				$("#error_con_1").hide()
-				$(".enviar").removeAttr("disabled")
-			}else{
-				$("#error_con_1").show()
-				$(".enviar").attr('disabled','disabled')
-			}
-
-			if(validate_fechaMayorQue(fecha_revision_especificaciones,fecha_revision_consejo)){
-				$("#error_con_2").hide()
-				$(".enviar").removeAttr("disabled")
-			}else{
-				$("#error_con_2").show()
-				$(".enviar").attr('disabled','disabled')
-			}
-		}
-	});
-
-	$("#fecha_revision_consejo").change(function () {
-		fecha_revision_consejo = $("#fecha_revision_consejo").val();
-		if(validate_fechaMayorQue(fecha_revision_contenidos,fecha_revision_consejo)){
-			$("#error_con_1").hide()
-			$(".enviar").removeAttr("disabled")
-		}else{
-			$("#error_con_1").show()
-			$(".enviar").attr('disabled','disabled')
-		}
-
-		if(validate_fechaMayorQue(fecha_revision_especificaciones,fecha_revision_consejo)){
-			$("#error_con_2").hide()
-			$(".enviar").removeAttr("disabled")
-		}else{
-			$("#error_con_2").show()
-			$(".enviar").attr('disabled','disabled')
-		}
-
-	});
-	$("#fechaControlCambios").change(function () {
-    fechaControlCambios = $("#fechaControlCambios").val();
-    if(validate_fechaMayorQue(fecha_prox_rev,fechaControlCambios)){
-      $("#error_cambios").hide()
-      $(".enviar").removeAttr("disabled")
-    }else{
-      $("#error_cambios").show()
-      $(".enviar").attr('disabled','disabled')
-    }
-  });
-
-  $("#fechaAprobacion").change(function () {
-    fechaAprobacion = $("#fechaAprobacion").val();
-    if(validate_fechaMayorQue(fecha_revision_contenidos,fechaAprobacion)){
-      $("#error_apro_1").hide()
-      $(".enviar").removeAttr("disabled")
-    }else{
-      $("#error_apro_1").show()
-      $(".enviar").attr('disabled','disabled')
-    }
-
-    if(validate_fechaMayorQue(fecha_revision_especificaciones,fechaAprobacion)){
-      $("#error_apro_2").hide()
-      $(".enviar").removeAttr("disabled")
-    }else{
-      $("#error_apro_2").show()
-      $(".enviar").attr('disabled','disabled')
-    }
-  });
-	function validate_fechaMayorQue(fechaInicial,fechaFinal)
-	{
-
-		valuesStart=fechaInicial.split("-");
-
-		valuesEnd=fechaFinal.split("-");
-
-		// Verificamos que la fecha no sea posterior a la actual
-
-		var dateStart=new Date(valuesStart[0],(valuesStart[1]-1),valuesStart[2]);
-
-		var dateEnd=new Date(valuesEnd[0],(valuesEnd[1]-1),valuesEnd[2]);
-
-		if(dateStart>=dateEnd)
-		{
-		    return false;
-		}
-
-		return true;
-
-	}
-	function agregarFecha(){
-		flag_validation = 1;
-		$("#relleno").html('<div class="form-group" id="con_as_div"><h5>Fecha de revisión por Consejo Asesor</h5><input class="datepicker" name="fecha_revision_consejo" id="fecha_revision_consejo" type="text" data-placement="bottom" data-trigger="manual" data-content="Seleccione una fecha" data-date-end-date="0d" readonly=""><h6 style="color:red" id="error_con_1">La fecha de revisión por el concejo asesor debe ser posterior a la fecha de revisión de contenido</h6><h6 style="color:red" id="error_con_2">La fecha de revisión por el concejo asesor debe ser posterior a la fecha de revisión de especificaciones</h6></div>');
-		$("#error_con_1").hide();
-		$("#error_con_2").hide();
-		$(function() {
-		$('.datepicker').datepicker({
-	    		format: 'yyyy-mm-dd'
-	    	})	
-
-		});
-		$("#fecha_revision_consejo").change(function () {
-			fecha_revision_consejo = $("#fecha_revision_consejo").val();
-			if(validate_fechaMayorQue(fecha_revision_contenidos,fecha_revision_consejo)){
-				$("#error_con_1").hide()
-				$(".enviar").removeAttr("disabled")
-			}else{
-				$("#error_con_1").show()
-				$(".enviar").attr('disabled','disabled')
-			}
-
-			if(validate_fechaMayorQue(fecha_revision_especificaciones,fecha_revision_consejo)){
-				$("#error_con_2").hide()
-				$(".enviar").removeAttr("disabled")
-			}else{
-				$("#error_con_2").show()
-				$(".enviar").attr('disabled','disabled')
-			}
-
-		});
-
-		
-	}
-
-	function eliminarFecha(){
-		flag_validation = 0;
-		$("#relleno").empty();
-		$(".enviar").removeAttr("disabled");
-		/*var container = document.getElementById("containerRevision");
-		while (container.hasChildNodes()) {
-			container.removeChild(container.lastChild);
-		}*/
-
-	}
-
-</script>
-
-<script type="text/javascript">
-	$('#tipo').change(function(){
-		if( $(this).val() == 'Otro'){
-			$('#otros').append('<h5 id="titulo_otro_tipo"><br>Especifique el tipo de Documento</h5><input type="text" class="input" name="otro_tipo" id="otro_tipo" placeholder="Nombre del Tipo" required>');
-		}else{
-			$('#otro_tipo').remove();
-			$('#titulo_otro_tipo').remove();
-		}
-	});
-
-
-
-									
-
-</script>
-
-<script type="text/javascript">
-	$(function() {
-		console.log("datapicker");
-		$('.datepicker').datepicker({
-			format: 'dd-mm-yyyy'
-		})	
-	});
-
-	$(function() {
-		
-		var scntDiv = $('#p_scents');
-		var i = $('#p_scents p').length;
-
-		
-		$('.form-group').on('click', '#addScnt', function() {
-			$('<p><input type="text" id="p_scnt" size="20" name="elaborador' + i +'" value="" placeholder="Ingrese un elaborador" /> <a href="#" id="remScnt"><span class="fa fa-trash-o"></span></a></p>').appendTo(scntDiv);
-			i++;
-			return false;
-		});
-		
-		$('.form-group').on('click', '#remScnt', function() { 
-			if( i > 2 ) {
-				$(this).parents('p').remove();
-				i--;
-			}
-			return false;
-		});
-	});
-
-</script>
-
-
-<script type="text/javascript">
-
-	function codigoDoc(){
-		 var codigoDocumento = document.getElementById("codigo").value;
-		 console.log(codigoDocumento);
-		 return codigoDocumento;
-	}
-
-	$(function() {
-		
-		var scntDiv = $('#p_anexo');
-		var i = $('#p_anexo p').length + 1;
-		
-		
-
-		$('.form-group').on('click', '#addAnexo', function() {
+	<div class="col-xl-5 col-lg-2">
+		<div class="card-box" style="background-color: white; padding: 30px; box-shadow: 2px 5px 20px rgba(119, 119, 119, 0.5);">
 			
-			var c = codigoDoc();
-			console.log(c);
-			console.log("asda");
+			<div class="widget-box-2">
+				<div class="widget-detail-2">
+					 <div class="white text-center">
+	            <i class="icon icon-circle icon-2x wb-search bg-blue-600" aria-hidden="true"></i>
 
-			$('<p><input type="text"  name="anexo_code' + i +'" value="'+ c +'"  /><a href="#" id="remScnt"><span class="fa fa-trash-o"></span></a></p><p><input type="text"  name="anexo_name' + i +'" placeholder="Nombre del anexo"  /> <a href="#" id="remScnt"><span class="fa fa-trash-o"></span></a></p>' ).appendTo(scntDiv);
-			i++;
-			return false;
-		});
-		
-		$('.form-group').on('click', '#remScnt', function() { 
-			if( i > 1 ) {
-				$(this).parents('p').remove();
-				i--;
-			}
-			return false;
-		});
-	});
+	          </div>
+				</div>
+				<br><br><br>
+					<div class="counter counter-md counter text-right">
+	        <div class="counter-number-group">
+	          <span class="counter-number">25</span>
+	          <span class="counter-number-related text-capitalize">docs</span>
+	        </div>
+	        <div class="counter-label text-capitalize font-size-16">en revisión</div>
+	        </div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xl-5 col-lg-2">
+		<div class="card-box" style="background-color: white; padding: 30px; box-shadow: 2px 5px 20px rgba(119, 119, 119, 0.5);">
+			
+			<div class="widget-box-2">
+				<div class="widget-detail-2">
+					 <div class="white text-center">
+	            <i class="icon icon-circle icon-2x wb-check bg-blue-600" aria-hidden="true"></i>
+
+	          </div>
+				</div>
+				<br><br><br>
+					<div class="counter counter-md counter text-right">
+	        <div class="counter-number-group">
+	          <span class="counter-number">25</span>
+	          <span class="counter-number-related text-capitalize">docs</span>
+	        </div>
+	        <div class="counter-label text-capitalize font-size-16">aprobados</div>
+	        </div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xl-1 col-lg-2">
+	</div>
+
+</div>
 
 
-</script>
+
+{{end}}
 
 
-
-
-
-
-
-
-<script src="{{=URL('static', 'plugins/datatables/jquery.dataTables.min.js')}}"></script>
-<script src="{{=URL('static', 'plugins/datatables/dataTables.bootstrap.js')}}"></script>
-<script src="{{=URL('static', 'plugins/datatables/dataTables.buttons.min.js')}}"></script>
-<script src="{{=URL('static', 'plugins/datatables/buttons.bootstrap.min.js')}}"></script>
-<script src="{{=URL('static', 'plugins/datatables/jszip.min.js')}}"></script>
-<script src="{{=URL('static', 'plugins/datatables/pdfmake.min.js')}}"></script>
-<script src="{{=URL('static', 'plugins/datatables/vfs_fonts.js')}}"></script>
-<script src="{{=URL('static', 'plugins/datatables/buttons.html5.min.js')}}"></script>
-<script src="{{=URL('static', 'plugins/datatables/buttons.print.min.js')}}"></script>
-<script src="{{=URL('static', 'plugins/datatables/dataTables.responsive.min.js')}}"></script>
-<script src="{{=URL('static', 'plugins/datatables/responsive.bootstrap.min.js')}}"></script>
-
-
-<!-- Datatable init js -->
-<script src="{{=URL('static', 'plugins/datatables/datatables.init.js')}}"></script>
-
-
-<script>
-
-  var filtros = false;
-  const langDT = "{{=URL('static', 'plugins/datatables/l18n/es-ES.json')}}"
-  $(document).ready(function() {
-	  // Setup - add a text input to each footer cell
-	  $('#datatable tfoot th').each( function () {
-		  var title = $(this).text();
-		  $(this).html( '<input type="text" placeholder="Filtro" />' );
-	  } );
-   
-	  // DataTable
-	  var table = $('#datatable').DataTable();
-   
-	  // Apply the search
-	  table.columns().every( function () {
-		  var that = this;
-   
-		  $( 'input', this.footer() ).on( 'keyup change', function () {
-			  if ( that.search() !== this.value ) {
-				  that
-					  .search( this.value )
-					  .draw();
-			  }
-		  } );
-	  } );
-
-	  $('#datatable tfoot tr').appendTo('#datatable thead');
-	  $("#datatable thead tr").not("#titulosListado").css("display","none");
-  } );
-
-  function mostrarFiltro() {
-	  if (filtros){
-		$("#datatable thead tr").not("#titulosListado").css("display","none");
-		filtros = false
-	  }
-	  else{
-		$("#datatable thead tr").not("#titulosListado").css("display","table-row");
-		filtros = true
-	  }
-
-  }
-</script>
- <script language="javascript" src="{{=URL('static', 'js/botones_dataTable.js')}}"></script>

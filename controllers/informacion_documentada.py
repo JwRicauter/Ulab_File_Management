@@ -1,19 +1,16 @@
-###################################################################################
-##																				 ##
-##		Controladores del módulo de información documentada 					 ##
-##																				 ##
-## 			» Andre Corcuera													 ##
-## 			» Angel Morante														 ##
-##			» Jawil Ricauter													 ##
-## 			» Jonathan Bandes													 ##
-## 			» Nairelys Hernandez												 ##
-## 			» Rosana Garcia														 ##
-##																				 ##
-###################################################################################
-
 import time
 import datetime
 
+
+def index(): 
+	return dict(message="hello from informacion_documentada.py")
+
+@auth.requires_login(otherwise=URL('modulos', 'login'))
+def lista_documentos():
+	return dict(message="hello from informacion_documentada.py")
+
+
+"""
 ## Pagina de Inicio del modulo de Gestion de Informacion Documentada
 def index(): 
 	return dict(message="hello from informacion_documentada.py")
@@ -508,3 +505,4 @@ def reporteDocumentos():
 
 	return dict(documentos=row,
 				dependencias = db().select(db.dependencias.nombre, db.dependencias.codigo_registro)) #row
+"""
